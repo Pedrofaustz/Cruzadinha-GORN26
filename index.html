@@ -1,37 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Acróstico - UFERSA</title>
-    <link rel="icon" type="image/x-icon" href="assets/icon.ico">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="icon" type="image/x-icon" href="assets/icon.ico" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="main-layout">
-        <header>
-            <h1>Cruzadinha - INEAGRO Cabugi</h1>
-        </header>
+      <header>
+        <h1>Cruzadinha - INEAGRO Cabugi</h1>
+      </header>
 
-        <main class="game-area">
-            <section class="acrostic-section">
-                <h2>Tabuleiro</h2>
-                <div id="acrostic-grid">
-                    </div>
-            </section>
+      <main class="game-area">
+        <section class="acrostic-section">
+          <h2>Tabuleiro</h2>
+          <div id="acrostic-grid"></div>
+        </section>
 
-            <section class="letters-section">
-                <h2>Letras para Preencher</h2>
-                <div id="letter-box">
-                    </div>
-                <div class="controls">
-                    <button onclick="checkAnswers()">Verificar Respostas</button>
-                    <p id="feedback"></p>
-                </div>
-            </section>
-        </main>
+        <section class="letters-section">
+          <h2>Letras para Preencher</h2>
+          <div id="letter-box"></div>
+          <div class="controls">
+            <button onclick="checkAnswers()">Verificar Respostas</button>
+            <p id="feedback"></p>
+          </div>
+        </section>
+      </main>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
