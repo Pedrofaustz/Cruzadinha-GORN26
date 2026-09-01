@@ -14,7 +14,6 @@ const letterBoxElement = document.getElementById("letter-box");
 const feedbackElement = document.getElementById("feedback");
 
 let draggedElement = null;
-const PIVOT_COLUMN_INDEX = 6;
 
 function createEmptySpacer() {
   const spacer = document.createElement("div");
@@ -28,19 +27,6 @@ function createFixedLetter(letter) {
   fixed.textContent = letter;
   return fixed;
 }
-
-// function createDropCell(rowIndex, cellIndex, side) {
-//   const cell = document.createElement("div");
-//   cell.classList.add("cell", "droppable");
-//   cell.setAttribute("data-row", rowIndex);
-//   cell.setAttribute("data-col", cellIndex);
-
-//   cell.addEventListener("dragover", (e) => e.preventDefault());
-//   cell.addEventListener("dragenter", (e) => cell.classList.add("drag-over"));
-//   cell.addEventListener("dragleave", (e) => cell.classList.remove("drag-over"));
-//   cell.addEventListener("drop", handleDrop);
-//   return cell;
-// }
 
 function returnLetterToBox(e) {
   const cell = e.currentTarget;
@@ -77,7 +63,27 @@ function setupGame() {
   let allLetters = [];
   let centralLetters = [];
   gridElement.innerHTML = "";
-  //   gridElement.style.setProperty("--colunas-dinamicas", `repeat(${PIVOT_COLUMN_INDEX + 5}, 35px)`);
+
+  let maxCharsBeforePivot = 0;
+  let maxCharsAfterPivot = 0;
+
+  gameData.forEach((item) => {
+    const answer = item.answer.toUpperCase();
+    const pivotIndex = answer.indexOf(item.letter.toUpperCase());
+    if (pivotIndex !== -1) {
+      maxCharsBeforePivot = Math.max(maxCharsBeforePivot, pivotIndex);
+      maxCharsAfterPivot = Math.max(maxCharsAfterPivot, answer.length - pivotIndex - 1);
+    }
+  });
+
+  const PIVOT_COLUMN_INDEX = maxCharsBeforePivot + 1;
+  const totalColumns = maxCharsBeforePivot + 1 + maxCharsAfterPivot;
+
+  gridElement.style.gridTemplateColumns = `repeat(${totalColumns}, 35px)`;
+
+  console.log(`Calculated PIVOT_COLUMN_INDEX: ${PIVOT_COLUMN_INDEX}`);
+  console.log(`Max chars before pivot: ${maxCharsBeforePivot}, Max chars after pivot: ${maxCharsAfterPivot}`);
+  console.log(`Total columns in grid: ${totalColumns}`);
 
   gameData.forEach((item, index) => {
     const answer = item.answer.toUpperCase();
@@ -88,10 +94,6 @@ function setupGame() {
 
     let wordStartingGridColumn = PIVOT_COLUMN_INDEX - inWhichIndexTheLetterIsInTheAnswer;
     console.log(`Row ${rowNumber}: Word starting grid column calculated as ${wordStartingGridColumn}`);
-
-    if (wordStartingGridColumn < 1) {
-      wordStartingGridColumn = 1;
-    }
 
     const emptyCellsCount = wordStartingGridColumn - 1;
 
@@ -159,6 +161,7 @@ function handleDragStart(e) {
   e.dataTransfer.effectAllowed = "move";
   setTimeout(() => e.target.classList.add("hidden"), 0);
 }
+
 function handleDrop(e) {
   e.preventDefault();
   e.target.classList.remove("drag-over");
@@ -177,6 +180,7 @@ function handleDrop(e) {
     }
   }
 }
+
 document.addEventListener("dragend", () => {
   if (draggedElement) {
     draggedElement.classList.remove("hidden");

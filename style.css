@@ -78,11 +78,11 @@ section {
 
 #acrostic-grid {
   display: grid;
-  /* Define 15 colunas, cada uma com 35px */
-  /* grid-template-columns: repeat(var(--colunas-dinamicas, 1), 35px); */
-  /* Colocamos o espaçamento no GAP, não na margem do item */
   gap: 2px;
   margin-bottom: 20px;
+  justify-content: center;
+  overflow-x: auto;
+  padding: 10px 0;
 }
 
 /* Elementos individuais do Grid */
@@ -127,14 +127,15 @@ section {
 }
 
 #letter-box {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 40px);
   gap: 10px;
   min-height: 324px;
   padding: 15px;
   border: 2px solid var(--primary-color);
   border-radius: 8px;
   background-color: #1a1a2e;
+  align-content: start;
 }
 
 .letter-tile {
